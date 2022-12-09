@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { removeToken } from "../../redux/authSlice";
 
 function Header() {
@@ -7,6 +8,7 @@ function Header() {
 
    const authState = useSelector((state) => state.authState);
    const categoryState = useSelector((state) => state.categoryState);
+   const cartState = useSelector((state) => state.cartState);
 
    return (
       <>
@@ -38,9 +40,9 @@ function Header() {
                <div className="row">
                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-8">
                      <div className="logo">
-                        <a href="/">
+                        <Link to="/">
                            <img src="images/logo.png" alt="" />
-                        </a>
+                        </Link>
                      </div>
                   </div>
 
@@ -102,10 +104,12 @@ function Header() {
                               </>
                            )}
                            <li>
-                              <a href="/cart" className="title">
+                              <Link to="/cart" className="title">
                                  <i className="fa fa-shopping-cart"></i>
-                                 <sup className="cart-quantity">1</sup>
-                              </a>
+                                 <sup className="cart-quantity">
+                                    {cartState.items.length}
+                                 </sup>
+                              </Link>
                            </li>
                         </ul>
                      </div>

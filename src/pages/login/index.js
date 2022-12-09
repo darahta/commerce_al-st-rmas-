@@ -27,10 +27,17 @@ function Login() {
       const postData = { email, password };
       api.post("shop/authentication-token", postData)
          .then((response) => {
-            console.log(">>RESPONSE", response);
+            console.log(">>AUTH RESPONSE", response);
+
+            const customerId = response.data.customer.replace(
+               "/api/v2/shop/customers/",
+               ""
+            );
+
             dispatch(
                setToken({
                   token: response.data.token,
+                  customerId,
                })
             );
             document.location.replace("/");

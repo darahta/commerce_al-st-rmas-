@@ -1,4 +1,14 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import CartTableItem from "./components/cart-table-item";
+
 function Cart(props) {
+   const cartState = useSelector((state) => state.cartState);
+
+   const cartTableItems = [];
+   cartState.items.map((item, index) => {
+      cartTableItems.push(<CartTableItem key={index} {...item} />);
+   });
    return (
       <div class="space-medium">
          <div class="container">
@@ -31,6 +41,7 @@ function Cart(props) {
                                     </tr>
                                  </thead>
                                  <tbody>
+                                    {cartTableItems}
                                     <tr>
                                        <td>
                                           <a href="#">
@@ -40,7 +51,7 @@ function Cart(props) {
                                              />
                                           </a>
                                           <span>
-                                             <a href="#">Google Pixle</a>
+                                             <a href="#">TEST PRODUCT ITEM 1</a>
                                           </span>
                                        </td>
                                        <td>$1100</td>
@@ -52,9 +63,9 @@ function Cart(props) {
                                                    class="input-text qty text"
                                                    step="1"
                                                    min="1"
-                                                   max="6"
+                                                   max="10"
                                                    name="quantity"
-                                                   value="1"
+                                                   defaultValue="1"
                                                    title="Qty"
                                                    size="4"
                                                    pattern="[0-9]*"
@@ -78,7 +89,7 @@ function Cart(props) {
                                              />
                                           </a>
                                           <span>
-                                             <a href="#">Apple iPhone 6S </a>
+                                             <a href="#">TEST PRODUCT ITEM 2</a>
                                           </span>
                                        </td>
                                        <td>$1300</td>
@@ -92,7 +103,7 @@ function Cart(props) {
                                                    min="1"
                                                    max="6"
                                                    name="quantity"
-                                                   value="1"
+                                                   defaultValue="1"
                                                    title="Qty"
                                                    size="4"
                                                    pattern="[0-9]*"
@@ -113,9 +124,9 @@ function Cart(props) {
                         </div>
                      </div>
                   </div>
-                  <a href="#" class="btn-link">
+                  <Link to="/" class="btn-link">
                      <i class="fa fa-angle-left"></i> back to shopping
-                  </a>
+                  </Link>
                </div>
 
                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -171,32 +182,6 @@ function Cart(props) {
                               Proceed To Checkout
                            </button>
                         </div>
-                     </div>
-                  </div>
-
-                  <div class="box mb30">
-                     <div class="box-head">
-                        <h3 class="head-title">Coupons &amp; Offers</h3>
-                     </div>
-                     <div class="box-body">
-                        <form>
-                           <div class="coupon-form">
-                              <input
-                                 type="text"
-                                 name="coupon_code"
-                                 class="form-control"
-                                 id="coupon_code"
-                                 value=""
-                                 placeholder="Coupon code"
-                              />
-                              <input
-                                 type="submit"
-                                 class="btn btn-primary btn-block"
-                                 name="apply_coupon"
-                                 value="Apply coupon"
-                              />
-                           </div>
-                        </form>
                      </div>
                   </div>
                </div>
