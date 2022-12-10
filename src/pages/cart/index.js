@@ -5,6 +5,20 @@ import CartTableItem from "./components/cart-table-item";
 function Cart(props) {
    const cartState = useSelector((state) => state.cartState);
 
+   if (cartState.id === null) {
+      return (
+         <div class="space-medium">
+            <div class="container">
+               <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+                     <strong>Loading...</strong>;
+                  </div>
+               </div>
+            </div>
+         </div>
+      );
+   }
+
    const cartTableItems = [];
    cartState.items.map((item, index) => {
       cartTableItems.push(<CartTableItem key={index} {...item} />);
@@ -40,85 +54,7 @@ function Cart(props) {
                                        <th></th>
                                     </tr>
                                  </thead>
-                                 <tbody>
-                                    {cartTableItems}
-                                    <tr>
-                                       <td>
-                                          <a href="#">
-                                             <img
-                                                src="/images/cart_product_1.png"
-                                                alt=""
-                                             />
-                                          </a>
-                                          <span>
-                                             <a href="#">TEST PRODUCT ITEM 1</a>
-                                          </span>
-                                       </td>
-                                       <td>$1100</td>
-                                       <td>
-                                          <div class="product-quantity">
-                                             <div class="quantity">
-                                                <input
-                                                   type="number"
-                                                   class="input-text qty text"
-                                                   step="1"
-                                                   min="1"
-                                                   max="10"
-                                                   name="quantity"
-                                                   defaultValue="1"
-                                                   title="Qty"
-                                                   size="4"
-                                                   pattern="[0-9]*"
-                                                />
-                                             </div>
-                                          </div>
-                                       </td>
-                                       <td>$1100.00</td>
-                                       <th scope="row">
-                                          <a href="#" class="btn-close">
-                                             <i class="fa fa-times-circle-o"></i>
-                                          </a>
-                                       </th>
-                                    </tr>
-                                    <tr>
-                                       <td>
-                                          <a href="#">
-                                             <img
-                                                src="/images/cart_product_2.png"
-                                                alt=""
-                                             />
-                                          </a>
-                                          <span>
-                                             <a href="#">TEST PRODUCT ITEM 2</a>
-                                          </span>
-                                       </td>
-                                       <td>$1300</td>
-                                       <td>
-                                          <div class="product-quantity">
-                                             <div class="quantity">
-                                                <input
-                                                   type="number"
-                                                   class="input-text qty text "
-                                                   step="1"
-                                                   min="1"
-                                                   max="6"
-                                                   name="quantity"
-                                                   defaultValue="1"
-                                                   title="Qty"
-                                                   size="4"
-                                                   pattern="[0-9]*"
-                                                />
-                                             </div>
-                                          </div>
-                                       </td>
-                                       <td>$1300.00</td>
-                                       <th scope="row">
-                                          <a href="#" class="btn-close">
-                                             <i class="fa fa-times-circle-o"></i>
-                                          </a>
-                                       </th>
-                                    </tr>
-                                 </tbody>
+                                 <tbody>{cartTableItems}</tbody>
                               </table>
                            </div>
                         </div>
@@ -141,19 +77,47 @@ function Cart(props) {
                                  <tbody>
                                     <tr>
                                        <th>
-                                          <span>Price (2 items)</span>
+                                          <span>
+                                             Price ({cartState.items.length}
+                                             items)
+                                          </span>
                                        </th>
-                                       <td>$2400</td>
+                                       <td>
+                                          {cartState.items.reduce(
+                                             (currentTotal, item) =>
+                                                currentTotal + item.subtotal,
+                                             0
+                                          )}
+                                          &nbsp;
+                                          {cartState.currencyCode}
+                                       </td>
+                                    </tr>
+                                    <tr>
+                                       <th>
+                                          <span>Tax Total</span>
+                                       </th>
+                                       <td>
+                                          {cartState.taxTotal} &nbsp;
+                                          {cartState.currencyCode}
+                                       </td>
+
+                                       <td></td>
                                     </tr>
                                     <tr>
                                        <th>
                                           <span>Delivery Charges</span>
                                        </th>
-                                       <td>
+                                       {cartState.shippingTotal == 0 ? (
                                           <strong class="text-green">
                                              Free
                                           </strong>
-                                       </td>
+                                       ) : (
+                                          <>
+                                             {cartState.shippingTotal}&nbsp;
+                                             {cartState.currencyCode}
+                                          </>
+                                       )}
+                                       <td></td>
                                     </tr>
                                  </tbody>
                                  <tbody>
@@ -163,7 +127,7 @@ function Cart(props) {
                                              class="mb0"
                                              style={{ fontWeight: "700" }}
                                           >
-                                             Amount Payable
+                                             Amount To Pay
                                           </span>
                                        </th>
                                        <td
@@ -172,15 +136,21 @@ function Cart(props) {
                                              color: "#1c1e1e",
                                           }}
                                        >
-                                          $2400
+                                          <>
+                                             {cartState.total}&nbsp;
+                                             {cartState.currencyCode}
+                                          </>
                                        </td>
                                     </tr>
                                  </tbody>
                               </table>
                            </div>
-                           <button class="btn btn-primary btn-block">
+                           <Link
+                              to="/checkout"
+                              class="btn btn-primary btn-block"
+                           >
                               Proceed To Checkout
-                           </button>
+                           </Link>
                         </div>
                      </div>
                   </div>

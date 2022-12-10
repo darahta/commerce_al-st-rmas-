@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Breadcrumb(props) {
    console.log(">>BREAD", props);
@@ -13,7 +14,7 @@ function Breadcrumb(props) {
                         {props.items.map((item, index) => {
                            return (
                               <li key={index}>
-                                 <a href={item.href}>{item.title}</a>
+                                 <Link to={item.href}>{item.title}</Link>
                               </li>
                            );
                         })}

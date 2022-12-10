@@ -13,6 +13,7 @@ import useApi from "./hooks/useApi";
 import { setCategories } from "./redux/categorySlice";
 import { setTokenValue } from "./redux/cartSlice";
 import { updateFullCart } from "./redux/cartSlice";
+import Checkout from "./pages/checkout";
 
 function App() {
    const authState = useSelector((state) => state.authState);
@@ -85,6 +86,7 @@ function App() {
                <Route path="auth/login" element={<Login />} />
                <Route path="auth/register" element={<Register />} />
                <Route path="cart" element={<Cart />} />
+               <Route path="checkout" element={<Checkout />} />
             </Routes>
             <Footer />
          </BrowserRouter>
